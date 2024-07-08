@@ -1,4 +1,4 @@
-package model;
+package org.example.bank.model;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,14 +7,20 @@ import lombok.Setter;
 
 import java.util.Date;
 
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    int id_trans;
-    Date date_trans;
-    float montant;
-    String type_transact;
-    String description;
+    private int id_trans;
+    private Date date_trans;
+    private float montant;
+    private String type_transact;
+    private String description;
     @ManyToOne
     @JoinColumn(name = "id_compt")
     private Compte compte;

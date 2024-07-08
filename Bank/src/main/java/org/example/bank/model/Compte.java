@@ -1,4 +1,4 @@
-package model;
+package org.example.bank.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,18 +8,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Beneficiare {
+
+public class Compte {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 
-    int id_bene;
-    String nom;
-    String num_compte_bene ;
-    String banque;
+    private int id_compt;
+    private  String type_compte;
+    private  float sold_initial;
+    private  Date date_creation;
+
 }

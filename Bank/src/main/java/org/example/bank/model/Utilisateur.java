@@ -1,4 +1,4 @@
-package model;
+package org.example.bank.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,11 +13,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class Utilisateur {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 
-    int id_user;
-    String nom;
-    String mail;
+    private int id_user;
+    private String nom;
+    private String mail;
 }

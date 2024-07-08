@@ -1,4 +1,4 @@
-package model;
+package org.example.bank.model;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,11 +16,11 @@ import java.util.Date;
 public class Carte {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    int id_carte;
-    String num_carte;
-    Date date_expiration;
-    String type_carte;
-    @ManyToOne
+    private  int id_carte;
+    private String num_carte;
+    private Date date_expiration;
+    private String type_carte;
+     @ManyToOne
     @JoinColumn(name = "id_compt")
     private Compte compte;
 }
