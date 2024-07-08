@@ -1,7 +1,9 @@
 package org.example.bank.service;
 
 import org.example.bank.dao.CarteDao;
+import org.example.bank.dao.CompteDao;
 import org.example.bank.model.Carte;
+import org.example.bank.model.Compte;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ public class CarteServiceImpl implements CarteService {
     @Autowired
     private CarteDao carteDao;
 
+    @Autowired
+private CompteDao compteDao;
 
     @Override
     public List<Carte> getAllCartes() {
@@ -25,8 +29,11 @@ public class CarteServiceImpl implements CarteService {
     }
 
     @Override
-    public Carte saveCarte(Carte movie) {
-        return carteDao.save(movie);
+    public Carte saveCarte(Carte carte , int id_compte) {
+        Compte compte = compteDao.findById(id_compte)
+                .orElseThrow(() -> new RuntimeException("Compte introuvable avec l'ID " + id_compte));
+        carte.setCompte(compte);
+        return carteDao.save(carte);
     }
 
     @Override
@@ -35,23 +42,26 @@ public class CarteServiceImpl implements CarteService {
     }
 
     @Override
-    public Carte updateCarte(int id, Carte movie) {
+    public Carte updateCarte(int id, Carte carte, int id_compt) {
         Optional<Carte> existCarte = carteDao.findById(id);
         if (existCarte.isPresent()) {
-            Carte updateCatre = getCarte(existCarte);
-            updateCatre.setCompte(movie.getCompte());
-            updateCatre.setNum_carte(movie.getNum_carte());
-            updateCatre.setType_carte(movie.getType_carte());
-            updateCatre.setDate_expiration(movie.getDate_expiration());
-            return carteDao.save(updateCatre);
+            Carte existingCarte = existCarte.get();
+            existingCarte.setDate_expiration(carte.getDate_expiration());
+            existingCarte.setNum_carte(carte.getNum_carte());
+            existingCarte.setType_carte(carte.getType_carte());
+            Compte compte= compteDao.findById(id_compt).orElseThrow(() ->
+                    new RuntimeException("Compte introuvable avec l'ID " + id_compt));
+
+            existingCarte.setCompte(compte);
+            return carteDao.save(existingCarte);
         } else {
             return null;
         }
     }
 
-    private static Carte getCarte(Optional<Carte> existingMovie) {
-        Carte updatedMovie = existingMovie.get();
-        return updatedMovie;
+    private static Carte getCarte(Optional<Carte> existingCarte) {
+        Carte updateCarte = existingCarte.get();
+        return updateCarte;
     }
 
 }
