@@ -32,7 +32,7 @@ public class JwtService {
         return generateToken(new HashMap<>(),userDetails);
     }
 
-    public boolean isTokenExpired(String token, UserDetails userDetails) {
+    public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extracUsername(token);
         return (username.equals(userDetails.getUsername()))&& !isTokenExpired(token);
     }
