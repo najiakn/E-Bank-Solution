@@ -12,6 +12,9 @@ import java.io.IOException;
 public class JwtAuthentificationFilter extends OncePerRequestFilter {
     private  final JwtService jwtService;
 
+    public JwtAuthentificationFilter(JwtService jwtService) {
+        this.jwtService = jwtService;
+    }
 
 
     @Override
