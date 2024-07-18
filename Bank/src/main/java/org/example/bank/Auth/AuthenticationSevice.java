@@ -5,6 +5,8 @@ import org.example.bank.config.JwtService;
 import org.example.bank.model.Role;
 import org.example.bank.model.UserRepository;
 import org.example.bank.model.Utilisateur;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,7 +18,7 @@ public class AuthenticationSevice {
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
-
+    private final AuthenticationManager authenticationManager;
     public AuthenticationResponse register(RegisterRequest request) {
         var user = Utilisateur.builder()
                 .prenom(request.getPrenom())
@@ -32,6 +34,14 @@ public class AuthenticationSevice {
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        return null;
+     authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+             request.getEmail(),
+             request.getPassword()
+     ));
+     var user = repository.findByEmail(request.getEmail()).orElseThrow();
+        var jwtToken=jwtService.generateToken(user);
+        return  AuthenticationResponse.builder().token(jwtToken).build();
+
+
     }
 }

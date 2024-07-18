@@ -12,6 +12,6 @@ import lombok.Setter;
 public class UtilisateurDto {
     private int id_user;
     private String nom;
-    private String mail;
+    private String email;
 
 }

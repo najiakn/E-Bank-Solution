@@ -6,5 +6,5 @@ import org.springframework.expression.spel.support.ReflectivePropertyAccessor;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<Utilisateur,Integer> {
-    Optional<Utilisateur>findByMail(String mail);
+    Optional<Utilisateur>findByEmail(String email);
 }
